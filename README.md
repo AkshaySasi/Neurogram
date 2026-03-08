@@ -4,14 +4,14 @@
 
 <p align="center">
   <strong>Memory infrastructure for AI agents.</strong><br>
-  <em>Give your AI a brain.</em>
+  <em>Where intelligence meets remembrance.</em>
 </p>
 
 <p align="center">
   <a href="https://pypi.org/project/neurogram/"><img src="https://img.shields.io/pypi/v/neurogram?color=7C3AED&style=for-the-badge" alt="PyPI"></a>
-  <a href="https://www.npmjs.com/package/neurogram-js"><img src="https://img.shields.io/npm/v/neurogram-js?color=06B6D4&style=for-the-badge" alt="npm"></a>
-  <a href="https://github.com/neurogram-ai/neurogram/blob/main/LICENSE"><img src="https://img.shields.io/badge/license-MIT-green?style=for-the-badge" alt="License"></a>
-  <a href="https://github.com/neurogram-ai/neurogram"><img src="https://img.shields.io/github/stars/neurogram-ai/neurogram?style=for-the-badge&color=FFD700" alt="Stars"></a>
+  <a href="https://www.npmjs.com/package/@centientspace/neurogram"><img src="https://img.shields.io/npm/v/@centientspace/neurogram?color=06B6D4&style=for-the-badge" alt="npm"></a>
+  <a href="https://github.com/AkshaySasi/Neurogram/blob/main/LICENSE"><img src="https://img.shields.io/badge/license-MIT-green?style=for-the-badge" alt="License"></a>
+  <a href="https://github.com/AkshaySasi/Neurogram"><img src="https://img.shields.io/github/stars/AkshaySasi/Neurogram?style=for-the-badge&color=FFD700" alt="Stars"></a>
 </p>
 
 ---
@@ -66,7 +66,7 @@ pip install neurogram[all]
 
 **JavaScript/TypeScript:**
 ```bash
-npm install neurogram-js
+npm install @centientspace/neurogram
 ```
 
 ---
@@ -243,7 +243,7 @@ curl -X POST http://localhost:8000/agents/adam/recall \
 ### JavaScript/TypeScript Client
 
 ```typescript
-import { Neurogram } from "neurogram-js";
+import { Neurogram } from "@centientspace/neurogram";
 
 const brain = new Neurogram("adam", { serverUrl: "http://localhost:8000" });
 
@@ -322,10 +322,11 @@ neurogram/
 - [x] SQLite storage backend
 - [x] FastAPI REST server
 - [x] TypeScript/JS SDK
+- [x] Memory consolidation (short-term → long-term)
+- [x] Memory visualization dashboard
+- [x] LangChain integration
 - [ ] Knowledge graph connections
 - [ ] PostgreSQL + pgvector backend
-- [ ] Memory consolidation (short-term → long-term)
-- [ ] Memory visualization dashboard
 - [ ] Hosted cloud platform
 
 ---
@@ -336,8 +337,8 @@ Contributions are welcome! See [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines
 
 ```bash
 # Setup development environment
-git clone https://github.com/neurogram-ai/neurogram.git
-cd neurogram
+git clone https://github.com/AkshaySasi/Neurogram.git
+cd Neurogram
 pip install -e ".[dev]"
 python -m pytest tests/ -v
 ```
@@ -351,5 +352,5 @@ MIT License — see [LICENSE](LICENSE) for details.
 ---
 
 <p align="center">
-  <strong>Neurogram</strong> — Because AI agents deserve to remember. 🧠
+  <strong>Neurogram</strong> — Where intelligence meets remembrance. 🧠
 </p>
