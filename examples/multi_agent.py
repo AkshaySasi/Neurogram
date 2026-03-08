@@ -1,5 +1,5 @@
-"""
-Neurogram — Multi-Agent Memory Example
+﻿"""
+Neurogram - Multi-Agent Memory Example
 
 Demonstrates multiple agents with separate memory spaces,
 each learning and remembering independently.
@@ -57,7 +57,7 @@ def main():
     )
 
     # Atlas learns data patterns
-    atlas.remember("Sales data has seasonal patterns — Q4 is strongest")
+    atlas.remember("Sales data has seasonal patterns - Q4 is strongest")
     atlas.store_fact(
         "Average customer lifetime value is $2,400",
         category="metrics",

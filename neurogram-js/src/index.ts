@@ -1,5 +1,5 @@
-/**
- * Neurogram.js — Memory infrastructure for AI agents.
+﻿/**
+ * Neurogram.js - Memory infrastructure for AI agents.
  *
  * TypeScript/JavaScript client SDK for the Neurogram Memory Server.
  * Requires a running Neurogram server.

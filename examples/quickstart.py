@@ -1,5 +1,5 @@
-"""
-Neurogram — Quick Start Example
+﻿"""
+Neurogram - Quick Start Example
 
 Demonstrates the basic API in 10 lines of code.
 """

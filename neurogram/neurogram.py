@@ -1,4 +1,4 @@
-"""Neurogram — system-level manager for multiple agents.
+﻿"""Neurogram - system-level manager for multiple agents.
 
 Provides a high-level interface for managing multiple AI agents,
 each with their own isolated memory space.

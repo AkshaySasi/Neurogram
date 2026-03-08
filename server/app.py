@@ -1,4 +1,4 @@
-"""Neurogram Memory Server — FastAPI REST API.
+﻿"""Neurogram Memory Server - FastAPI REST API.
 
 Provides HTTP endpoints for managing agents and their memories.
 This enables multi-language access to the Neurogram memory system.
@@ -229,7 +229,7 @@ async def forget(name: str, memory_id: str):
 
 @app.post("/agents/{name}/decay")
 async def decay(name: str):
-    """Run memory decay — forget unimportant memories."""
+    """Run memory decay - forget unimportant memories."""
     agent = _get_agent(name)
     forgotten = agent.decay()
     return {"status": "decayed", "memories_forgotten": forgotten}

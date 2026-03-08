@@ -1,4 +1,4 @@
-"""Agent — the primary developer-facing API for Neurogram.
+﻿"""Agent - the primary developer-facing API for Neurogram.
 
 Provides an elegant, high-level interface for giving AI agents memory.
 This is the class most developers will interact with directly.
@@ -180,7 +180,7 @@ class Agent:
         """Get memory-augmented context for an LLM prompt.
 
         Retrieves relevant memories and formats them for injection
-        into an LLM prompt. This is the key integration point —
+        into an LLM prompt. This is the key integration point -
         use this to make your LLM responses context-aware.
 
         Args:
@@ -395,7 +395,7 @@ class Agent:
         return self._memory.forget(memory_id)
 
     def decay(self) -> int:
-        """Run memory decay — forget unimportant memories.
+        """Run memory decay - forget unimportant memories.
 
         Applies time-based decay and prunes low-importance memories.
         Call this periodically to simulate natural forgetting.
@@ -412,7 +412,7 @@ class Agent:
         Groups similar memories, merges them into stronger
         consolidated memories, and removes weak originals.
 
-        This makes the agent more efficient over time — instead of
+        This makes the agent more efficient over time - instead of
         100 fragmented memories, it creates 10 strong, comprehensive ones.
 
         Args:
@@ -434,7 +434,7 @@ class Agent:
         """
         return self._memory.consolidate(dry_run=dry_run)
 
-    # Alias for consolidate — more intuitive name
+    # Alias for consolidate - more intuitive name
     sleep = consolidate
 
     def stats(self) -> Dict[str, Any]:

@@ -1,4 +1,4 @@
-"""Embedding engines for Neurogram.
+﻿"""Embedding engines for Neurogram.
 
 Provides multiple embedding backends:
 - NumpyEmbeddingEngine: Zero-dependency TF-IDF style embeddings (default)
@@ -259,8 +259,8 @@ def get_default_engine() -> EmbeddingEngine:
     """Get the best available embedding engine.
 
     Tries in order:
-    1. LocalEmbeddingEngine (sentence-transformers) — best quality
-    2. NumpyEmbeddingEngine — always available fallback
+    1. LocalEmbeddingEngine (sentence-transformers) - best quality
+    2. NumpyEmbeddingEngine - always available fallback
 
     Returns:
         An initialized EmbeddingEngine instance.

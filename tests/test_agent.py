@@ -1,4 +1,4 @@
-"""Tests for the core Agent API — the primary developer interface."""
+﻿"""Tests for the core Agent API - the primary developer interface."""
 
 import os
 import tempfile

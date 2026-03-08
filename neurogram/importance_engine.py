@@ -1,4 +1,4 @@
-"""Memory importance scoring and decay engine for Neurogram.
+﻿"""Memory importance scoring and decay engine for Neurogram.
 
 Implements a biologically-inspired memory importance model:
 - Frequency: Memories accessed more often are more important
@@ -115,7 +115,7 @@ class ImportanceEngine:
 
         Uses exponential decay: importance *= e^(-decay_rate * time)
 
-        This simulates the Ebbinghaus forgetting curve — memories
+        This simulates the Ebbinghaus forgetting curve - memories
         exponentially lose strength without reinforcement.
 
         Args:

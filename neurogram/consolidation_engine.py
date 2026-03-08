@@ -1,6 +1,6 @@
-"""Memory Consolidation Engine for Neurogram.
+﻿"""Memory Consolidation Engine for Neurogram.
 
-Simulates human memory consolidation — the process where the brain
+Simulates human memory consolidation - the process where the brain
 transfers short-term memories into long-term storage during sleep.
 
 This module:
@@ -9,7 +9,7 @@ This module:
 3. Removes the weak originals
 4. Boosts importance of consolidated memories
 
-This is a truly unique feature — no competitor does this.
+This is a truly unique feature - no competitor does this.
 """
 
 from __future__ import annotations
@@ -32,7 +32,7 @@ class ConsolidationEngine:
     - Preserves important details while reducing redundancy
     - Boosts the importance of consolidated memories
 
-    This makes agents more efficient over time — instead of 100
+    This makes agents more efficient over time - instead of 100
     fragmented memories about "user preferences", they get 5
     strong, comprehensive ones.
     """
@@ -73,7 +73,7 @@ class ConsolidationEngine:
 
         Args:
             agent_id: The agent to consolidate memories for.
-            memory_type: Optional filter — only consolidate this type.
+            memory_type: Optional filter - only consolidate this type.
             dry_run: If True, show what would happen without changes.
 
         Returns:
@@ -174,7 +174,7 @@ class ConsolidationEngine:
         if not cluster:
             return None
 
-        # Combine content — deduplicate while preserving order
+        # Combine content - deduplicate while preserving order
         seen_content = set()
         content_parts = []
         for mem in cluster:

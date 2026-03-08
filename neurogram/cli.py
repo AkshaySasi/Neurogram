@@ -1,4 +1,4 @@
-"""Neurogram CLI — command line interface for Neurogram.
+﻿"""Neurogram CLI - command line interface for Neurogram.
 
 Provides basic management commands for Neurogram agents.
 """
@@ -14,7 +14,7 @@ def main():
     """Main CLI entry point."""
     parser = argparse.ArgumentParser(
         prog="neurogram",
-        description="Neurogram — Memory infrastructure for AI agents",
+        description="Neurogram - Memory infrastructure for AI agents",
     )
     parser.add_argument(
         "--version",
@@ -213,7 +213,7 @@ def _cmd_consolidate(agent_name, dry_run, db_path):
     print(f"\n  🧠 Consolidating memories for {agent_name}...")
 
     if dry_run:
-        print("  (dry run — no changes will be made)\n")
+        print("  (dry run - no changes will be made)\n")
 
     result = agent.consolidate(dry_run=dry_run)
 

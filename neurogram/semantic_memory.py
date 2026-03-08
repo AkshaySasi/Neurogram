@@ -1,6 +1,6 @@
-"""Semantic Memory system for Neurogram.
+﻿"""Semantic Memory system for Neurogram.
 
-Stores and retrieves factual knowledge — concepts, definitions,
+Stores and retrieves factual knowledge - concepts, definitions,
 relationships, and general world knowledge. This is the agent's
 "encyclopedia" of learned facts.
 """
@@ -16,7 +16,7 @@ from neurogram.storage.base import StorageBackend
 
 
 class SemanticMemory:
-    """Manages semantic memories — the agent's factual knowledge.
+    """Manages semantic memories - the agent's factual knowledge.
 
     Semantic memory stores facts, concepts, and relationships:
     - "Docker is a containerization platform"

@@ -1,6 +1,6 @@
-"""SQLite storage backend for Neurogram.
+﻿"""SQLite storage backend for Neurogram.
 
-Default storage backend using SQLite — zero external dependencies.
+Default storage backend using SQLite - zero external dependencies.
 Stores memories, embeddings, and agent configs in a local database file.
 Cosine similarity search is done in Python (fast enough for <100k memories).
 """

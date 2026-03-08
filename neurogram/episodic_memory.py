@@ -1,6 +1,6 @@
-"""Episodic Memory system for Neurogram.
+﻿"""Episodic Memory system for Neurogram.
 
-Stores and retrieves structured experiences — what happened,
+Stores and retrieves structured experiences - what happened,
 what the outcome was, and what was learned. This enables AI
 agents to learn from past interactions and improve over time.
 """
@@ -16,7 +16,7 @@ from neurogram.storage.base import StorageBackend
 
 
 class EpisodicMemory:
-    """Manages episodic memories — the agent's experiences.
+    """Manages episodic memories - the agent's experiences.
 
     Episodic memory stores structured records of events:
     - What happened (topic, action)

@@ -1,6 +1,6 @@
-"""Procedural Memory system for Neurogram.
+﻿"""Procedural Memory system for Neurogram.
 
-Stores and retrieves how-to knowledge — step-by-step procedures,
+Stores and retrieves how-to knowledge - step-by-step procedures,
 workflows, and skills. This enables agents to remember and improve
 how they perform tasks.
 """
@@ -16,7 +16,7 @@ from neurogram.storage.base import StorageBackend
 
 
 class ProceduralMemory:
-    """Manages procedural memories — the agent's skills and procedures.
+    """Manages procedural memories - the agent's skills and procedures.
 
     Procedural memory stores how to do things:
     - "To deploy an API: 1) Build Docker image, 2) Push to registry, 3) Deploy"

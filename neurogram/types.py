@@ -1,4 +1,4 @@
-"""Core type definitions for Neurogram."""
+﻿"""Core type definitions for Neurogram."""
 
 from __future__ import annotations
 
@@ -197,7 +197,7 @@ class Episode:
 
 @dataclass
 class Procedure:
-    """A procedural memory record — how to do something.
+    """A procedural memory record - how to do something.
 
     Attributes:
         id: Unique procedure identifier.

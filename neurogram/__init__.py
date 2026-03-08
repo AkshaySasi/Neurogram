@@ -1,4 +1,4 @@
-"""Neurogram — Memory infrastructure for AI agents.
+﻿"""Neurogram - Memory infrastructure for AI agents.
 
 Give your AI a brain. Neurogram provides persistent, multi-type
 memory for AI agents with episodic learning, semantic knowledge,

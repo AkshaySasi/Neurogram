@@ -1,10 +1,10 @@
-<p align="center">
+﻿<p align="center">
   <img src="assets/banner.svg" alt="Neurogram Banner" width="100%">
 </p>
 
 <p align="center">
   <strong>The cognitive memory engine for AI agents.</strong><br>
-  <em>Not another vector store. A complete memory architecture — modeled after the human brain.</em>
+  <em>Not another vector store. A complete memory architecture - modeled after the human brain.</em>
 </p>
 
 <p align="center">
@@ -18,7 +18,7 @@
 
 ## 🧠 Every AI has memory now. So what's different?
 
-Yes — ChatGPT, Claude, Gemini all "remember" things now. And tools like mem0, Zep, and Letta exist. **But they all do the same thing**: store text, retrieve text. A glorified search engine over your past conversations.
+Yes - ChatGPT, Claude, Gemini all "remember" things now. And tools like mem0, Zep, and Letta exist. **But they all do the same thing**: store text, retrieve text. A glorified search engine over your past conversations.
 
 **Humans don't work that way.** Your brain doesn't dump all memories into one bucket. It has:
 - **Semantic memory** (facts: "Python is a programming language")
@@ -26,7 +26,7 @@ Yes — ChatGPT, Claude, Gemini all "remember" things now. And tools like mem0, 
 - **Procedural memory** (skills: "How to deploy to Kubernetes, step by step")
 - **Forgetting** (unimportant things naturally fade away)
 
-**Neurogram gives AI agents that same architecture.** Not just storage — a cognitive memory system.
+**Neurogram gives AI agents that same architecture.** Not just storage - a cognitive memory system.
 
 ---
 
@@ -64,7 +64,7 @@ stats = agent.consolidate()  # or agent.sleep()
 #   "User strongly prefers Python, uses it for backend with FastAPI"
 ```
 
-This makes agents **more efficient over time** — fewer memories, better recall, lower token costs.
+This makes agents **more efficient over time** - fewer memories, better recall, lower token costs.
 
 ---
 
@@ -75,11 +75,11 @@ from neurogram import Agent
 
 agent = Agent("nova")
 
-# Semantic Memory — facts and knowledge
+# Semantic Memory - facts and knowledge
 agent.remember("Company uses microservices architecture")
 agent.store_fact("Kubernetes orchestrates containers", category="DevOps")
 
-# Episodic Memory — learning from experience
+# Episodic Memory - learning from experience
 agent.learn(
     topic="Code review",
     action="Gave complex explanation",
@@ -88,7 +88,7 @@ agent.learn(
 )
 # Next time, agent remembers to simplify!
 
-# Procedural Memory — skills and step-by-step knowledge
+# Procedural Memory - skills and step-by-step knowledge
 agent.learn_procedure(
     name="Deploy to production",
     steps=["Run tests", "Build Docker image", "Push to registry", "Deploy to K8s"],
@@ -98,11 +98,11 @@ agent.learn_procedure(
 
 ---
 
-## 📉 Memories that fade — just like yours
+## 📉 Memories that fade - just like yours
 
 Most AI memory tools keep everything forever. That's not how brains work, and it's not efficient.
 
-Neurogram uses the **Ebbinghaus forgetting curve** — memories naturally decay unless reinforced:
+Neurogram uses the **Ebbinghaus forgetting curve** - memories naturally decay unless reinforced:
 
 ```python
 # Important memories get accessed often → stay strong
@@ -131,7 +131,7 @@ agent = Agent("my_agent")
 agent.remember("User prefers dark mode and concise responses")
 agent.learn(topic="UI design", outcome="User loved minimal approach", lesson="Keep it simple")
 
-# Later — agent recalls what matters
+# Later - agent recalls what matters
 context = agent.think("How should I design the next feature?")
 # → Relevant memories injected for LLM context
 ```
@@ -208,7 +208,7 @@ pip install neurogram[server]
 neurogram server --port 8000
 ```
 
-Full REST API at `http://localhost:8000/docs` — use from any language.
+Full REST API at `http://localhost:8000/docs` - use from any language.
 
 ```typescript
 import { Neurogram } from "@centientspace/neurogram";
@@ -247,10 +247,10 @@ python -m pytest tests/ -v  # 52 tests passing
 
 ## 📄 License
 
-MIT License — see [LICENSE](LICENSE) for details.
+MIT License - see [LICENSE](LICENSE) for details.
 
 ---
 
 <p align="center">
-  <strong>Neurogram</strong> — not another vector store. A cognitive architecture for AI memory. 🧠
+  <strong>Neurogram</strong> - not another vector store. A cognitive architecture for AI memory. 🧠
 </p>

@@ -1,4 +1,4 @@
-"""LangChain integration for Neurogram.
+﻿"""LangChain integration for Neurogram.
 
 Provides a `NeurogramMemory` class that plugs directly into
 LangChain's memory system, giving any LangChain agent persistent,
@@ -195,7 +195,7 @@ class NeurogramMemory(BaseChatMemory):
 
     def clear(self) -> None:
         """Clear all memories (LangChain interface)."""
-        # We don't actually clear — Neurogram memories are persistent
+        # We don't actually clear - Neurogram memories are persistent
         # Instead, run decay to remove unimportant ones
         self._agent.decay()
 
