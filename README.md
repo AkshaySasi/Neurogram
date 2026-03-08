@@ -238,17 +238,22 @@ A web dashboard showing memory type breakdown, importance heatmap, and memory ta
 
 ## REST API server
 
+You can run the memory server locally:
 ```bash
 pip install neurogram[server]
 neurogram server --port 8000
 ```
+*(Swagger docs available at `http://localhost:8000/docs`)*
 
-Full REST API with Swagger docs at `http://localhost:8000/docs`.
+**Or use the free public testing API hosted on Render:**  
+👉 `https://neurogram-sr3r.onrender.com/docs`
 
 ```typescript
 import { Neurogram } from "@centientspace/neurogram";
 
-const brain = new Neurogram("adam", { serverUrl: "http://localhost:8000" });
+// Connect to the public live instance (or your own local server)
+const brain = new Neurogram("adam", { serverUrl: "https://neurogram-sr3r.onrender.com" });
+
 await brain.remember("User studies machine learning");
 const context = await brain.think("What should I recommend?");
 ```
