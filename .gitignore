@@ -1,0 +1,42 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Distribution / packaging
+dist/
+build/
+*.egg-info/
+*.egg
+
+# Virtual environments
+.venv/
+venv/
+env/
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Neurogram local data
+*.db
+.neurogram/
+
+# Node
+node_modules/
+neurogram-js/dist/
+
+# Testing
+.pytest_cache/
+htmlcov/
+.coverage
+
+# Temporary
+tmp/
+*.log

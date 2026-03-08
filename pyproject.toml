@@ -1,0 +1,67 @@
+[build-system]
+requires = ["setuptools>=68.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "neurogram"
+version = "0.1.0"
+description = "Memory infrastructure for AI agents. Give your AI a brain."
+readme = "README.md"
+license = {text = "MIT"}
+requires-python = ">=3.9"
+authors = [
+    {name = "Neurogram Team"}
+]
+keywords = [
+    "ai", "memory", "agents", "llm", "embeddings",
+    "cognitive", "episodic-memory", "semantic-memory",
+    "knowledge-graph", "ai-memory"
+]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Scientific/Engineering :: Artificial Intelligence",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+]
+dependencies = [
+    "numpy>=1.21.0",
+]
+
+[project.optional-dependencies]
+embeddings = ["sentence-transformers>=2.2.0"]
+openai = ["openai>=1.0.0"]
+server = [
+    "fastapi>=0.100.0",
+    "uvicorn[standard]>=0.20.0",
+    "pydantic>=2.0.0",
+]
+dev = [
+    "pytest>=7.0.0",
+    "pytest-asyncio>=0.21.0",
+    "httpx>=0.24.0",
+]
+all = [
+    "neurogram[embeddings,openai,server,dev]",
+]
+
+[project.urls]
+Homepage = "https://github.com/neurogram-ai/neurogram"
+Documentation = "https://github.com/neurogram-ai/neurogram#readme"
+Repository = "https://github.com/neurogram-ai/neurogram"
+Issues = "https://github.com/neurogram-ai/neurogram/issues"
+
+[project.scripts]
+neurogram = "neurogram.cli:main"
+
+[tool.setuptools.packages.find]
+include = ["neurogram*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["."]
