@@ -1,5 +1,5 @@
 {
-  "name": "neurogram-js",
+  "name": "@centientspace/neurogram",
   "version": "0.1.0",
   "description": "Memory infrastructure for AI agents — JavaScript/TypeScript SDK",
   "main": "dist/index.js",
@@ -9,8 +9,14 @@
     "prepublishOnly": "npm run build"
   },
   "keywords": [
-    "ai", "memory", "agents", "llm", "embeddings",
-    "cognitive", "ai-memory", "neurogram"
+    "ai",
+    "memory",
+    "agents",
+    "llm",
+    "embeddings",
+    "cognitive",
+    "ai-memory",
+    "neurogram"
   ],
   "author": "Neurogram Team",
   "license": "MIT",
