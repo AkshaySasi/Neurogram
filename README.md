@@ -3,8 +3,8 @@
 </p>
 
 <p align="center">
-  <strong>Memory infrastructure for AI agents.</strong><br>
-  <em>Where intelligence meets remembrance.</em>
+  <strong>The cognitive memory engine for AI agents.</strong><br>
+  <em>Not another vector store. A complete memory architecture — modeled after the human brain.</em>
 </p>
 
 <p align="center">
@@ -16,52 +16,124 @@
 
 ---
 
-## ⚡ Give your AI agents real memory in 3 lines
+## 🧠 Every AI has memory now. So what's different?
+
+Yes — ChatGPT, Claude, Gemini all "remember" things now. And tools like mem0, Zep, and Letta exist. **But they all do the same thing**: store text, retrieve text. A glorified search engine over your past conversations.
+
+**Humans don't work that way.** Your brain doesn't dump all memories into one bucket. It has:
+- **Semantic memory** (facts: "Python is a programming language")
+- **Episodic memory** (experiences: "Last time I tried recursion, the user got confused")
+- **Procedural memory** (skills: "How to deploy to Kubernetes, step by step")
+- **Forgetting** (unimportant things naturally fade away)
+
+**Neurogram gives AI agents that same architecture.** Not just storage — a cognitive memory system.
+
+---
+
+## ⚡ What Neurogram does that others don't
+
+| Feature | mem0 / Zep / Letta | Vector DBs | **Neurogram** |
+|---------|-------------------|------------|---------------|
+| Store & search text | ✅ | ✅ | ✅ |
+| Separate memory types (semantic, episodic, procedural) | ❌ | ❌ | ✅ |
+| Memory consolidation (merge fragmented → strong) | ❌ | ❌ | ✅ |
+| Biological forgetting (Ebbinghaus decay) | ❌ | ❌ | ✅ |
+| Importance scoring (frequency × recency × emotion) | ❌ | ❌ | ✅ |
+| Learn from experience (not just store text) | ❌ | ❌ | ✅ |
+| Remember skills & procedures | ❌ | ❌ | ✅ |
+| Zero-config (`pip install` and done) | Needs setup | Needs server | ✅ |
+
+---
+
+## 🔥 The killer feature: Memory Consolidation
+
+No competitor has this. Inspired by how the human brain consolidates memories during sleep:
+
+```python
+agent = Agent("nova")
+
+# Throughout the day, agent accumulates fragmented memories
+agent.remember("User likes Python")
+agent.remember("User prefers Python over JavaScript")
+agent.remember("User uses Python for backend work")
+agent.remember("User's stack is Python + FastAPI")
+
+# Consolidation merges similar fragments into fewer, stronger memories
+stats = agent.consolidate()  # or agent.sleep()
+# → 4 fragmented memories become 1 strong memory:
+#   "User strongly prefers Python, uses it for backend with FastAPI"
+```
+
+This makes agents **more efficient over time** — fewer memories, better recall, lower token costs.
+
+---
+
+## 🧬 Three types of memory, not one bucket
 
 ```python
 from neurogram import Agent
 
-adam = Agent("adam")
-adam.remember("User prefers concise, technical responses")
-context = adam.think("How should I explain this API?")
+agent = Agent("nova")
+
+# Semantic Memory — facts and knowledge
+agent.remember("Company uses microservices architecture")
+agent.store_fact("Kubernetes orchestrates containers", category="DevOps")
+
+# Episodic Memory — learning from experience
+agent.learn(
+    topic="Code review",
+    action="Gave complex explanation",
+    outcome="User was confused",
+    lesson="Use simple analogies instead"
+)
+# Next time, agent remembers to simplify!
+
+# Procedural Memory — skills and step-by-step knowledge
+agent.learn_procedure(
+    name="Deploy to production",
+    steps=["Run tests", "Build Docker image", "Push to registry", "Deploy to K8s"],
+    context="When user asks about deployment"
+)
 ```
 
-That's it. Your agent now has **persistent, searchable, evolving memory**.
+---
+
+## 📉 Memories that fade — just like yours
+
+Most AI memory tools keep everything forever. That's not how brains work, and it's not efficient.
+
+Neurogram uses the **Ebbinghaus forgetting curve** — memories naturally decay unless reinforced:
+
+```python
+# Important memories get accessed often → stay strong
+agent.recall("deployment process")  # reinforced → importance goes UP
+
+# Unimportant memories fade over time
+agent.decay()  # applies time-based decay, prunes weak memories
+```
+
+**Importance Score** = frequency × recency × emotional valence × user feedback
 
 ---
 
-## 🧠 What is Neurogram?
-
-Most AI agents today are **stateless** — they forget everything after each conversation. Neurogram changes that.
-
-Neurogram is an **AI Memory OS** that gives agents human-like memory:
-
-| Memory Type | Human Analogy | Neurogram Feature |
-|-------------|--------------|-------------------|
-| **Semantic** | Knowing what a router is | `agent.remember("Docker is a containerization platform")` |
-| **Episodic** | Remembering yesterday's meeting | `agent.learn(topic="API design", outcome="User liked REST")` |
-| **Procedural** | Knowing how to ride a bicycle | `agent.learn_procedure("Deploy", steps=[...])` |
-| **Importance** | Important memories persist | Automatic scoring + decay |
-| **Forgetting** | Unused memories fade | `agent.decay()` — Ebbinghaus curve |
-
-Unlike simple vector stores, Neurogram implements a **complete cognitive memory architecture**.
-
----
-
-## 🚀 Installation
+## 🚀 Get started in 30 seconds
 
 ```bash
-# Core (zero dependencies beyond numpy)
 pip install neurogram
+```
 
-# With sentence-transformers (better embeddings)
-pip install neurogram[embeddings]
+```python
+from neurogram import Agent
 
-# With FastAPI server
-pip install neurogram[server]
+agent = Agent("my_agent")
 
-# Everything
-pip install neurogram[all]
+# It just works. No database server. No API keys. No Docker.
+agent.remember("User prefers dark mode and concise responses")
+agent.learn(topic="UI design", outcome="User loved minimal approach", lesson="Keep it simple")
+
+# Later — agent recalls what matters
+context = agent.think("How should I design the next feature?")
+# → Relevant memories injected for LLM context
 ```
 
 **JavaScript/TypeScript:**
@@ -71,121 +143,53 @@ npm install @centientspace/neurogram
 
 ---
 
-## 📖 Quick Start
-
-### Single Agent
+## 🔌 Drop into LangChain in 2 lines
 
 ```python
-from neurogram import Agent
+from neurogram.integrations.langchain import NeurogramMemory
 
-# Create an agent — memories persist across sessions
-agent = Agent("Nova", description="Coding assistant")
-
-# Store memories
-agent.remember("User's project uses FastAPI + PostgreSQL")
-agent.remember("User prefers type hints in Python code")
-
-# Learn from experience
-agent.learn(
-    topic="Code review",
-    action="Suggested type hints",
-    outcome="User appreciated it",
-    lesson="Always suggest type hints"
-)
-
-# Get context for LLM prompts
-context = agent.think("How should I help with this Python code?")
-# → "Relevant memories:
-#    - User's project uses FastAPI + PostgreSQL
-#    - User prefers type hints in Python code"
-
-# Search specific memories
-results = agent.recall("user preferences")
-for r in results:
-    print(f"[{r.relevance_score:.2f}] {r.memory.content}")
+# Replaces LangChain's built-in memory with cognitive memory
+memory = NeurogramMemory(agent_name="assistant")
+chain = ConversationChain(llm=OpenAI(), memory=memory)
 ```
 
-### Multi-Agent System
+---
 
-```python
-from neurogram import Neurogram
+## 📊 Visualize your agent's brain
 
-brain = Neurogram()
-
-# Each agent has isolated memory
-adam = brain.create_agent("Adam", description="Researcher")
-nova = brain.create_agent("Nova", description="Coder")
-
-adam.remember("Transformers are the dominant NLP architecture")
-nova.remember("User's stack: FastAPI, Docker, K8s")
-
-# Memories don't leak between agents
-adam.think("NLP")   # → finds transformer memory
-nova.think("NLP")   # → empty (Nova doesn't know about NLP)
+```bash
+pip install neurogram[server]
+neurogram dashboard
 ```
 
-### Memory-Augmented LLM
-
-```python
-from neurogram import Agent
-from openai import OpenAI
-
-agent = Agent("assistant")
-client = OpenAI()
-
-def chat(user_message: str) -> str:
-    # Get relevant memories
-    context = agent.think(user_message, format_style="structured")
-
-    response = client.chat.completions.create(
-        model="gpt-4",
-        messages=[
-            {"role": "system", "content": f"You have memory:\n{context}"},
-            {"role": "user", "content": user_message},
-        ]
-    )
-
-    answer = response.choices[0].message.content
-
-    # Learn from this interaction
-    agent.learn(topic=user_message[:50], action="answered", outcome="responded")
-    return answer
-```
+A live dashboard showing memory type breakdown, importance heatmaps, and memory decay over time.
 
 ---
 
 ## 🏗️ Architecture
 
 ```
-User Input
-    ↓
-AI Agent
-    ↓
-┌─────────────────────────────────────┐
-│         NEUROGRAM MEMORY OS         │
-│                                     │
-│  ┌───────────┐  ┌───────────────┐   │
-│  │ Episodic  │  │   Semantic    │   │
-│  │  Memory   │  │   Memory     │   │
-│  └───────────┘  └───────────────┘   │
-│  ┌───────────┐  ┌───────────────┐   │
-│  │Procedural │  │  Importance   │   │
-│  │  Memory   │  │   Engine     │   │
-│  └───────────┘  └───────────────┘   │
-│  ┌───────────┐  ┌───────────────┐   │
-│  │ Embedding │  │   Storage     │   │
-│  │  Engine   │  │   Backend    │   │
-│  └───────────┘  └───────────────┘   │
-└─────────────────────────────────────┘
-    ↓
-LLM Reasoning
-    ↓
-Response
+┌─────────────────────────────────────────┐
+│           NEUROGRAM MEMORY OS           │
+│                                         │
+│  ┌─────────────┐  ┌─────────────────┐   │
+│  │  Episodic   │  │    Semantic     │   │
+│  │  Memory     │  │    Memory       │   │
+│  └─────────────┘  └─────────────────┘   │
+│  ┌─────────────┐  ┌─────────────────┐   │
+│  │ Procedural  │  │  Consolidation  │   │
+│  │  Memory     │  │    Engine       │   │
+│  └─────────────┘  └─────────────────┘   │
+│  ┌─────────────┐  ┌─────────────────┐   │
+│  │ Importance  │  │    Forgetting   │   │
+│  │  Scoring    │  │    (Decay)      │   │
+│  └─────────────┘  └─────────────────┘   │
+│  ┌─────────────┐  ┌─────────────────┐   │
+│  │  Embedding  │  │    Storage      │   │
+│  │  Engine     │  │    Backend      │   │
+│  └─────────────┘  └─────────────────┘   │
+└─────────────────────────────────────────┘
 ```
-
----
-
-## 🔌 Pluggable Backends
 
 ### Embedding Engines
 
@@ -195,136 +199,35 @@ Response
 | `LocalEmbeddingEngine` | ⭐⭐⭐⭐ | ⚡⚡ | `sentence-transformers` |
 | `OpenAIEmbeddingEngine` | ⭐⭐⭐⭐⭐ | ⚡ | `openai` + API key |
 
-```python
-from neurogram import Agent
-from neurogram import LocalEmbeddingEngine
-
-# Use sentence-transformers for better quality
-agent = Agent("nova", embedding_engine=LocalEmbeddingEngine())
-```
-
-### Storage Backends
-
-| Backend | Best For |
-|---------|----------|
-| `SQLiteBackend` | Development, single-agent (default) |
-| Custom backends | Implement `StorageBackend` interface |
-
 ---
 
 ## 🧪 Memory Server (REST API)
-
-Run the Neurogram server for multi-language access:
 
 ```bash
 pip install neurogram[server]
 neurogram server --port 8000
 ```
 
-API docs at `http://localhost:8000/docs`
-
-```bash
-# Create agent
-curl -X POST http://localhost:8000/agents \
-  -H "Content-Type: application/json" \
-  -d '{"name": "adam"}'
-
-# Store memory
-curl -X POST http://localhost:8000/agents/adam/remember \
-  -H "Content-Type: application/json" \
-  -d '{"content": "User prefers dark mode"}'
-
-# Search memory
-curl -X POST http://localhost:8000/agents/adam/recall \
-  -H "Content-Type: application/json" \
-  -d '{"query": "UI preferences"}'
-```
-
-### JavaScript/TypeScript Client
+Full REST API at `http://localhost:8000/docs` — use from any language.
 
 ```typescript
 import { Neurogram } from "@centientspace/neurogram";
 
 const brain = new Neurogram("adam", { serverUrl: "http://localhost:8000" });
-
-await brain.create("Research assistant");
 await brain.remember("User studies machine learning");
-
-const memories = await brain.recall("user interests");
 const context = await brain.think("What should I recommend?");
-```
-
----
-
-## 🧬 Importance & Forgetting
-
-Neurogram uses biologically-inspired memory dynamics:
-
-**Importance Score** = α×Frequency + β×Recency + γ×Emotion + δ×Feedback
-
-- **Frequency**: Memories accessed more often strengthen
-- **Recency**: Recent memories are naturally more vivid
-- **Emotion**: Emotionally charged memories persist longer
-- **Forgetting**: Ebbinghaus exponential decay curve
-
-```python
-agent = Agent("nova")
-
-# Frequently accessed memories become stronger
-for _ in range(10):
-    agent.recall("important topic")
-
-# Run decay — low-importance memories get pruned
-forgotten = agent.decay()
-print(f"Forgot {forgotten} faded memories")
-```
-
----
-
-## 📁 Project Structure
-
-```
-neurogram/
-├── neurogram/                  # Python SDK
-│   ├── __init__.py
-│   ├── agent.py               # Primary developer API
-│   ├── neurogram.py            # Multi-agent manager
-│   ├── memory_manager.py       # Central orchestrator
-│   ├── embedding_engine.py     # Pluggable embeddings
-│   ├── importance_engine.py    # Scoring & decay
-│   ├── episodic_memory.py      # Experience memory
-│   ├── semantic_memory.py      # Factual knowledge
-│   ├── procedural_memory.py    # Skills & procedures
-│   ├── cli.py                  # CLI interface
-│   ├── types.py                # Core data types
-│   └── storage/
-│       ├── base.py             # Storage interface
-│       └── sqlite_backend.py   # Default SQLite storage
-├── server/
-│   └── app.py                  # FastAPI REST server
-├── neurogram-js/               # NPM package
-│   └── src/index.ts            # TypeScript SDK
-├── examples/
-│   ├── quickstart.py
-│   ├── chatbot_memory.py
-│   └── multi_agent.py
-├── tests/
-├── pyproject.toml
-└── README.md
 ```
 
 ---
 
 ## 🛣️ Roadmap
 
-- [x] Core memory engine (semantic, episodic, procedural)
-- [x] Importance scoring & decay
-- [x] SQLite storage backend
-- [x] FastAPI REST server
-- [x] TypeScript/JS SDK
-- [x] Memory consolidation (short-term → long-term)
-- [x] Memory visualization dashboard
+- [x] Cognitive memory types (semantic, episodic, procedural)
+- [x] Importance scoring & Ebbinghaus decay
+- [x] Memory consolidation (`agent.sleep()`)
 - [x] LangChain integration
+- [x] Memory visualization dashboard
+- [x] FastAPI REST server + JS/TS SDK
 - [ ] Knowledge graph connections
 - [ ] PostgreSQL + pgvector backend
 - [ ] Hosted cloud platform
@@ -333,14 +236,11 @@ neurogram/
 
 ## 🤝 Contributing
 
-Contributions are welcome! See [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines.
-
 ```bash
-# Setup development environment
 git clone https://github.com/AkshaySasi/Neurogram.git
 cd Neurogram
 pip install -e ".[dev]"
-python -m pytest tests/ -v
+python -m pytest tests/ -v  # 52 tests passing
 ```
 
 ---
@@ -352,5 +252,5 @@ MIT License — see [LICENSE](LICENSE) for details.
 ---
 
 <p align="center">
-  <strong>Neurogram</strong> — Where intelligence meets remembrance. 🧠
+  <strong>Neurogram</strong> — not another vector store. A cognitive architecture for AI memory. 🧠
 </p>
