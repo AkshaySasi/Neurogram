@@ -1,7 +1,7 @@
 import os
 import sys
 
-# Optional: Try to import google.generativeai to run a real LLM test
+# Try to import google.generativeai to run a real LLM test
 try:
     import google.generativeai as genai
     has_gemini = bool(os.environ.get("GEMINI_API_KEY"))
@@ -12,93 +12,80 @@ except ImportError:
 
 from neurogram import Agent
 
-def run_simulation_test():
-    """Runs a simulated test showing the structural difference in prompts."""
-    print("==================================================")
-    print("🧠 NEUROGRAM VS STANDARD AI: CONCEPTUAL TEST")
-    print("==================================================")
-    
-    print("\n[Scenario]")
-    print("Over the past month, you've told the AI:")
-    print("1. 'I am highly allergic to peanuts.'")
-    print("2. 'I live in downtown London.'")
-    print("3. 'I work as a Python developer.'")
-    
-    print("\nToday, you ask a brand new question (new chat session):")
-    query = "Can you recommend a good lunch spot?"
-    print(f"User: '{query}'")
-    
-    print("\n" + "-" * 50)
-    print("❌ SYSTEM 1: STANDARD AI (No Memory)")
-    print("-" * 50)
-    print("System Prompt: 'You are a helpful assistant.'")
-    print(f"User Prompt: '{query}'")
-    print("Result: The AI gives generic London restaurants, or asks where you live, and crucially, forgets to check for peanut allergies because you didn't mention it in this specific prompt.")
-    
-    print("\n" + "-" * 50)
-    print("✅ SYSTEM 2: AI WITH NEUROGRAM")
-    print("-" * 50)
-    
-    # Initialize Neurogram Agent
-    agent = Agent("test_agent_1")
-    
-    # Simulate past memories
-    agent.remember("User is highly allergic to peanuts", importance=0.9)
-    agent.remember("User lives in downtown London", importance=0.7)
-    agent.remember("User works as a Python developer", importance=0.6)
-    
-    # Neurogram automatically fetches relevant context based on the query
-    context = agent.think(query, format_style="structured")
-    
-    print(f"System Prompt: 'You are a helpful assistant. You have the following context:\n{context}'")
-    print(f"User Prompt: '{query}'")
-    print("Result: The AI recommends a peanut-free restaurant in downtown London, perhaps with a tech/developer vibe.")
-
-def run_real_llm_test():
-    """Runs a real test using Gemini API."""
+def run_interactive_test():
+    """Runs a real interactive test using Gemini API."""
     print("==================================================")
     print("🤖 REAL LLM TEST (Using Gemini-2.5-Flash)")
     print("==================================================")
     
-    agent = Agent("test_agent_2")
+    if not has_gemini:
+        print("\n[ERROR] Gemini API not configured.")
+        print("To run this test, please:")
+        print("1. pip install google-generativeai")
+        print("2. Set your API key in the terminal:")
+        print("   $env:GEMINI_API_KEY=\"your_key_here\"")
+        return
+
+    # Use a real-world scenario name
+    agent = Agent("personal_assistant")
     
-    # Seed memories
-    agent.remember("User is highly allergic to peanuts")
-    agent.remember("User lives in downtown London")
+    # 1. Gather memories from the user
+    print("\nLet's teach the AI some things about you.")
+    print("Type 3 facts about yourself (e.g., dietary restrictions, preferences, location).")
     
-    query = "Can you recommend a good lunch spot for me today?"
-    print(f"\nUser: '{query}'")
+    fact1 = input("Fact 1: ")
+    if not fact1: fact1 = "I am highly allergic to peanuts."
+    agent.remember(fact1)
     
-    # 1. Without Memory
-    print("\n[Without Neurogram]")
+    fact2 = input("Fact 2: ")
+    if not fact2: fact2 = "I live in downtown London."
+    agent.remember(fact2)
+    
+    fact3 = input("Fact 3: ")
+    if not fact3: fact3 = "I work as a Python developer."
+    agent.remember(fact3)
+    
+    print("\n✅ Memories saved to local SQLite database.")
+    
+    # 2. Ask a question
+    print("\nNow, ask a question where the AI needs to use those facts.")
+    print("Example: 'Can you recommend a good lunch spot for me today?'")
+    query = input("\nYour question: ")
+    if not query: query = "Can you recommend a good lunch spot for me today?"
+    
+    print("\nCalling Gemini...")
+    
+    # 3. Test Without Memory
+    print("\n" + "-" * 50)
+    print("❌ SYSTEM 1: STANDARD GEMINI (No Memory)")
+    print("-" * 50)
     model_without_memory = genai.GenerativeModel(
         model_name='gemini-2.5-flash',
         system_instruction="You are a helpful assistant."
     )
     response1 = model_without_memory.generate_content(query)
-    print(f"AI: {response1.text.strip()}")
+    print(f"\nAI: {response1.text.strip()}")
     
-    # 2. With Memory
-    print("\n[With Neurogram]")
+    # 4. Test With Memory
+    print("\n\n" + "-" * 50)
+    print("✅ SYSTEM 2: GEMINI WITH NEUROGRAM")
+    print("-" * 50)
+    
+    # Neurogram automatically fetches relevant context based on the query
+    print("Fetching relevant memories...")
     context = agent.think(query)
+    print(f"(Injected context: {context})\n")
+    
     model_with_memory = genai.GenerativeModel(
         model_name='gemini-2.5-flash',
         system_instruction=f"You are a helpful assistant. Here is what you know about the user:\n{context}"
     )
     response2 = model_with_memory.generate_content(query)
     print(f"AI: {response2.text.strip()}")
-
+    
+    print("\n==================================================")
+    print("Compare the two responses above.")
+    print("Notice how Neurogram intercepts the prompt, finds the relevant facts, and gives the AI context it otherwise wouldn't have.")
 
 if __name__ == "__main__":
-    run_simulation_test()
-    
-    print("\n\n")
-    if has_gemini:
-        run_real_llm_test()
-    else:
-        print("-" * 50)
-        print("Note: To run the real comparative test using Gemini, please run:")
-        print("  pip install google-generativeai")
-        print("And set your API key in the terminal before running the script:")
-        print("  $env:GEMINI_API_KEY=\"your_key_here\"")
-        print("-" * 50)
+    run_interactive_test()
