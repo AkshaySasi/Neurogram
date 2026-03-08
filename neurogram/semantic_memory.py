@@ -156,6 +156,9 @@ class SemanticMemory:
                 if mem.metadata.get("category") == category
             ][:limit]
 
+        # Semantic memory prioritizes importance - strongest facts first
+        results.sort(key=lambda x: x[0].importance_score, reverse=True)
+
         # Reinforce accessed memories
         for memory, _ in results:
             memory.access_count += 1

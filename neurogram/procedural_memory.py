@@ -114,12 +114,19 @@ class ProceduralMemory:
         for memory, score in results:
             proc_data = memory.metadata.get("procedure", {})
             if proc_data:
-                procedures.append(Procedure.from_dict(proc_data))
+                proc = Procedure.from_dict(proc_data)
+                procedures.append(proc)
 
                 # Reinforce
                 memory.access_count += 1
                 memory.last_accessed = time.time()
                 self._storage.save_memory(memory)
+
+        # Procedural memory prioritizes proven procedures (highest success rate first)
+        procedures.sort(
+            key=lambda p: p.success_count / max(1, p.success_count + p.failure_count),
+            reverse=True,
+        )
 
         return procedures
 

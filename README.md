@@ -3,8 +3,8 @@
 </p>
 
 <p align="center">
-  <strong>The cognitive memory engine for AI agents.</strong><br>
-  <em>Not another vector store. A complete memory architecture - modeled after the human brain.</em>
+  <strong>A cognitive memory architecture for AI agents.</strong><br>
+  <em>Not another vector store. Structured memory types, biological forgetting, and memory consolidation.</em>
 </p>
 
 <p align="center">
@@ -16,110 +16,42 @@
 
 ---
 
-## 🧠 Every AI has memory now. So what's different?
+## The problem with AI memory today
 
-Yes - ChatGPT, Claude, Gemini all "remember" things now. And tools like mem0, Zep, and Letta exist. **But they all do the same thing**: store text, retrieve text. A glorified search engine over your past conversations.
+Most memory tools for AI agents work the same way: dump everything into one bucket, search by similarity. That's basically a vector database with extra steps.
 
-**Humans don't work that way.** Your brain doesn't dump all memories into one bucket. It has:
-- **Semantic memory** (facts: "Python is a programming language")
-- **Episodic memory** (experiences: "Last time I tried recursion, the user got confused")
-- **Procedural memory** (skills: "How to deploy to Kubernetes, step by step")
-- **Forgetting** (unimportant things naturally fade away)
+But the human brain organizes memory very differently:
 
-**Neurogram gives AI agents that same architecture.** Not just storage - a cognitive memory system.
+- **Semantic memory** for facts ("Python is a programming language")
+- **Episodic memory** for experiences ("Last time I explained recursion, the user got confused")
+- **Procedural memory** for skills ("Steps to deploy to production: 1, 2, 3...")
+- **Forgetting** for efficiency (unimportant things naturally fade)
 
----
-
-## ⚡ What Neurogram does that others don't
-
-| Feature | mem0 / Zep / Letta | Vector DBs | **Neurogram** |
-|---------|-------------------|------------|---------------|
-| Store & search text | ✅ | ✅ | ✅ |
-| Separate memory types (semantic, episodic, procedural) | ❌ | ❌ | ✅ |
-| Memory consolidation (merge fragmented → strong) | ❌ | ❌ | ✅ |
-| Biological forgetting (Ebbinghaus decay) | ❌ | ❌ | ✅ |
-| Importance scoring (frequency × recency × emotion) | ❌ | ❌ | ✅ |
-| Learn from experience (not just store text) | ❌ | ❌ | ✅ |
-| Remember skills & procedures | ❌ | ❌ | ✅ |
-| Zero-config (`pip install` and done) | Needs setup | Needs server | ✅ |
+Neurogram brings this structure to AI agents. It separates memory into types, each with its own retrieval logic, and adds features like importance scoring and time-based decay.
 
 ---
 
-## 🔥 The killer feature: Memory Consolidation
+## What Neurogram offers
 
-No competitor has this. Inspired by how the human brain consolidates memories during sleep:
+| Feature | How it works |
+|---------|-------------|
+| **Three memory types** | Semantic stores facts (sorted by importance). Episodic stores experiences (sorted by recency). Procedural stores skills (sorted by success rate). |
+| **Importance scoring** | Each memory gets a score based on access frequency, recency, and emotional weight. Frequently recalled memories get stronger. |
+| **Biological forgetting** | Time-based decay using the Ebbinghaus curve. Unimportant memories fade, keeping the memory space efficient. |
+| **Memory consolidation** | Groups similar memories and merges them into stronger, deduplicated versions. Reduces memory count, boosts quality. |
+| **Zero config** | `pip install neurogram` and it works. SQLite storage, numpy-based embeddings - no external services needed. |
 
-```python
-agent = Agent("nova")
-
-# Throughout the day, agent accumulates fragmented memories
-agent.remember("User likes Python")
-agent.remember("User prefers Python over JavaScript")
-agent.remember("User uses Python for backend work")
-agent.remember("User's stack is Python + FastAPI")
-
-# Consolidation merges similar fragments into fewer, stronger memories
-stats = agent.consolidate()  # or agent.sleep()
-# → 4 fragmented memories become 1 strong memory:
-#   "User strongly prefers Python, uses it for backend with FastAPI"
-```
-
-This makes agents **more efficient over time** - fewer memories, better recall, lower token costs.
+> **Note on default embeddings:** Out of the box, Neurogram uses a lightweight hash-based embedding engine. This works for basic matching but is not truly semantic. For proper semantic similarity, install `neurogram[embeddings]` which uses sentence-transformers.
 
 ---
 
-## 🧬 Three types of memory, not one bucket
-
-```python
-from neurogram import Agent
-
-agent = Agent("nova")
-
-# Semantic Memory - facts and knowledge
-agent.remember("Company uses microservices architecture")
-agent.store_fact("Kubernetes orchestrates containers", category="DevOps")
-
-# Episodic Memory - learning from experience
-agent.learn(
-    topic="Code review",
-    action="Gave complex explanation",
-    outcome="User was confused",
-    lesson="Use simple analogies instead"
-)
-# Next time, agent remembers to simplify!
-
-# Procedural Memory - skills and step-by-step knowledge
-agent.learn_procedure(
-    name="Deploy to production",
-    steps=["Run tests", "Build Docker image", "Push to registry", "Deploy to K8s"],
-    context="When user asks about deployment"
-)
-```
-
----
-
-## 📉 Memories that fade - just like yours
-
-Most AI memory tools keep everything forever. That's not how brains work, and it's not efficient.
-
-Neurogram uses the **Ebbinghaus forgetting curve** - memories naturally decay unless reinforced:
-
-```python
-# Important memories get accessed often → stay strong
-agent.recall("deployment process")  # reinforced → importance goes UP
-
-# Unimportant memories fade over time
-agent.decay()  # applies time-based decay, prunes weak memories
-```
-
-**Importance Score** = frequency × recency × emotional valence × user feedback
-
----
-
-## 🚀 Get started in 30 seconds
+## Quick start
 
 ```bash
 pip install neurogram
+
+# For much better search quality (recommended):
+pip install neurogram[embeddings]
 ```
 
 ```python
@@ -127,88 +59,169 @@ from neurogram import Agent
 
 agent = Agent("my_agent")
 
-# It just works. No database server. No API keys. No Docker.
+# Store different types of memory
 agent.remember("User prefers dark mode and concise responses")
-agent.learn(topic="UI design", outcome="User loved minimal approach", lesson="Keep it simple")
 
-# Later - agent recalls what matters
+agent.learn(
+    topic="UI design",
+    outcome="User loved minimal approach",
+    lesson="Keep interfaces simple"
+)
+
+agent.learn_procedure(
+    name="Deploy API",
+    steps=["Run tests", "Build image", "Push to registry", "Deploy"],
+)
+
+# Retrieve - each type has its own retrieval logic
 context = agent.think("How should I design the next feature?")
-# → Relevant memories injected for LLM context
-```
-
-**JavaScript/TypeScript:**
-```bash
-npm install @centientspace/neurogram
 ```
 
 ---
 
-## 🔌 Drop into LangChain in 2 lines
+## How each memory type works differently
+
+This is what separates Neurogram from flat memory stores. Each memory type has distinct storage, retrieval, and data structures:
+
+### Semantic Memory (facts)
+Stores factual knowledge. Retrieval sorts by **importance score** - the most reinforced facts surface first.
+
+```python
+agent.remember("Company uses microservices architecture")
+agent.store_fact("FastAPI is a Python web framework", category="tech")
+
+# Retrieval prioritizes the most important/accessed facts
+facts = agent.query_facts("web framework")
+```
+
+### Episodic Memory (experiences)
+Stores structured experiences with topic, action, outcome, and lesson fields. Retrieval sorts by **recency** - recent experiences surface first, like human memory.
+
+```python
+agent.learn(
+    topic="Code review",
+    action="Gave complex explanation",
+    outcome="User was confused",
+    lesson="Use simple analogies instead"
+)
+
+# Returns recent episodes first
+lessons = agent.get_lessons("code review")
+```
+
+### Procedural Memory (skills)
+Stores step-by-step procedures. Retrieval sorts by **success rate** - proven procedures surface first. Tracks success/failure counts per procedure.
+
+```python
+agent.learn_procedure(
+    name="Deploy to production",
+    steps=["Run tests", "Build Docker image", "Push to registry", "Deploy to K8s"],
+)
+
+# Returns procedures with highest success rate first
+procedures = agent.recall_procedures("deployment")
+```
+
+---
+
+## Memory consolidation
+
+Groups similar memories by embedding proximity and merges them into fewer, deduplicated versions. The merged memories get a 20% importance boost and decay 50% slower.
+
+```python
+# Over time, agent accumulates similar memories
+agent.remember("User likes Python")
+agent.remember("User prefers Python over JavaScript")
+agent.remember("User uses Python for backend work")
+
+# Consolidation merges similar ones, removes originals
+stats = agent.consolidate()  # or agent.sleep()
+print(stats)
+# {'clusters_found': 1, 'memories_merged': 3, 'memories_created': 1, 'memories_removed': 3}
+```
+
+> **Current limitation:** Consolidation merges content by concatenation (e.g., "User likes Python | User prefers Python over JS"). A future version will use LLM-powered summarization to produce natural merged content like "User strongly prefers Python for backend development."
+
+---
+
+## Forgetting and decay
+
+Importance scoring is based on:
+
+**Score** = frequency x recency x emotional_valence x user_feedback
+
+Memories accessed often get reinforced. Memories ignored gradually decay following the Ebbinghaus forgetting curve.
+
+```python
+# Frequently accessed memories get stronger
+for _ in range(10):
+    agent.recall("deployment process")  # reinforced each time
+
+# Run decay - low-importance memories get pruned
+forgotten = agent.decay()
+print(f"Forgot {forgotten} faded memories")
+```
+
+---
+
+## LangChain integration
+
+Drop-in memory replacement for LangChain chains:
 
 ```python
 from neurogram.integrations.langchain import NeurogramMemory
 
-# Replaces LangChain's built-in memory with cognitive memory
 memory = NeurogramMemory(agent_name="assistant")
 chain = ConversationChain(llm=OpenAI(), memory=memory)
 ```
 
 ---
 
-## 📊 Visualize your agent's brain
+## Dashboard
 
 ```bash
 pip install neurogram[server]
 neurogram dashboard
 ```
 
-A live dashboard showing memory type breakdown, importance heatmaps, and memory decay over time.
+A web dashboard showing memory type breakdown, importance heatmap, and memory table.
 
 ---
 
-## 🏗️ Architecture
+## Architecture
 
 ```
-┌─────────────────────────────────────────┐
-│           NEUROGRAM MEMORY OS           │
-│                                         │
-│  ┌─────────────┐  ┌─────────────────┐   │
-│  │  Episodic   │  │    Semantic     │   │
-│  │  Memory     │  │    Memory       │   │
-│  └─────────────┘  └─────────────────┘   │
-│  ┌─────────────┐  ┌─────────────────┐   │
-│  │ Procedural  │  │  Consolidation  │   │
-│  │  Memory     │  │    Engine       │   │
-│  └─────────────┘  └─────────────────┘   │
-│  ┌─────────────┐  ┌─────────────────┐   │
-│  │ Importance  │  │    Forgetting   │   │
-│  │  Scoring    │  │    (Decay)      │   │
-│  └─────────────┘  └─────────────────┘   │
-│  ┌─────────────┐  ┌─────────────────┐   │
-│  │  Embedding  │  │    Storage      │   │
-│  │  Engine     │  │    Backend      │   │
-│  └─────────────┘  └─────────────────┘   │
-└─────────────────────────────────────────┘
+                     NEUROGRAM
+  ┌──────────────────────────────────────┐
+  │  Episodic    Semantic    Procedural  │  <- Memory Types
+  │  (recency)   (importance) (success)  │  <- Retrieval Logic
+  ├──────────────────────────────────────┤
+  │  Consolidation Engine                │  <- Merge similar memories
+  │  Importance Scoring + Decay          │  <- Ebbinghaus curve
+  ├──────────────────────────────────────┤
+  │  Embedding Engine    Storage Backend │  <- Pluggable
+  │  (numpy/st/openai)  (sqlite/custom) │
+  └──────────────────────────────────────┘
 ```
 
-### Embedding Engines
+### Embedding engines
 
-| Engine | Quality | Speed | Dependencies |
-|--------|---------|-------|-------------|
-| `NumpyEmbeddingEngine` | ⭐⭐ | ⚡⚡⚡ | None (default) |
-| `LocalEmbeddingEngine` | ⭐⭐⭐⭐ | ⚡⚡ | `sentence-transformers` |
-| `OpenAIEmbeddingEngine` | ⭐⭐⭐⭐⭐ | ⚡ | `openai` + API key |
+| Engine | Quality | Setup |
+|--------|---------|-------|
+| `NumpyEmbeddingEngine` | Approximate (hash-based) | Default, zero dependencies |
+| `LocalEmbeddingEngine` | High (neural) | `pip install neurogram[embeddings]` |
+| `OpenAIEmbeddingEngine` | Highest | `pip install neurogram[openai]` + API key |
 
 ---
 
-## 🧪 Memory Server (REST API)
+## REST API server
 
 ```bash
 pip install neurogram[server]
 neurogram server --port 8000
 ```
 
-Full REST API at `http://localhost:8000/docs` - use from any language.
+Full REST API with Swagger docs at `http://localhost:8000/docs`.
 
 ```typescript
 import { Neurogram } from "@centientspace/neurogram";
@@ -220,21 +233,27 @@ const context = await brain.think("What should I recommend?");
 
 ---
 
-## 🛣️ Roadmap
+## Roadmap
 
-- [x] Cognitive memory types (semantic, episodic, procedural)
-- [x] Importance scoring & Ebbinghaus decay
-- [x] Memory consolidation (`agent.sleep()`)
+**Completed:**
+- [x] Three memory types with distinct retrieval logic
+- [x] Importance scoring and Ebbinghaus decay
+- [x] Memory consolidation (concatenation-based)
 - [x] LangChain integration
 - [x] Memory visualization dashboard
 - [x] FastAPI REST server + JS/TS SDK
-- [ ] Knowledge graph connections
-- [ ] PostgreSQL + pgvector backend
-- [ ] Hosted cloud platform
+- [x] Zero-config setup (pip install and run)
+
+**Future directions:**
+- [ ] LLM-powered consolidation (intelligent summarization instead of concatenation)
+- [ ] Behavior adaptation (agent actually changes behavior based on episodic lessons)
+- [ ] Knowledge graph connections between memories
+- [ ] PostgreSQL + pgvector backend for production scale
+- [ ] Hosted cloud API
 
 ---
 
-## 🤝 Contributing
+## Contributing
 
 ```bash
 git clone https://github.com/AkshaySasi/Neurogram.git
@@ -245,12 +264,12 @@ python -m pytest tests/ -v  # 52 tests passing
 
 ---
 
-## 📄 License
+## License
 
 MIT License - see [LICENSE](LICENSE) for details.
 
 ---
 
 <p align="center">
-  <strong>Neurogram</strong> - not another vector store. A cognitive architecture for AI memory. 🧠
+  <strong>Neurogram</strong> - structured memory for AI agents.
 </p>

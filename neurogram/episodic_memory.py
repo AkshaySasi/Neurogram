@@ -125,14 +125,19 @@ class EpisodicMemory:
         for memory, score in results:
             episode_data = memory.metadata.get("episode", {})
             if episode_data:
-                episodes.append(Episode.from_dict(episode_data))
+                ep = Episode.from_dict(episode_data)
+                ep._created_at = memory.created_at  # carry timestamp
+                episodes.append((ep, memory, score))
 
                 # Reinforce: update access
                 memory.access_count += 1
                 memory.last_accessed = time.time()
                 self._storage.save_memory(memory)
 
-        return episodes
+        # Episodic memory prioritizes recency - recent experiences first
+        episodes.sort(key=lambda x: x[1].created_at, reverse=True)
+
+        return [ep for ep, _, _ in episodes]
 
     def get_lessons(
         self,
