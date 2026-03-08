@@ -23,7 +23,7 @@ Multi-Agent:
     ```
 """
 
-__version__ = "0.1.0"
+__version__ = "0.2.0"
 
 from neurogram.agent import Agent
 from neurogram.neurogram import Neurogram
@@ -43,6 +43,7 @@ from neurogram.embedding_engine import (
     OpenAIEmbeddingEngine,
 )
 from neurogram.importance_engine import ImportanceConfig, ImportanceEngine
+from neurogram.consolidation_engine import ConsolidationEngine
 
 __all__ = [
     # Primary API
@@ -63,4 +64,5 @@ __all__ = [
     "OpenAIEmbeddingEngine",
     "ImportanceEngine",
     "ImportanceConfig",
+    "ConsolidationEngine",
 ]

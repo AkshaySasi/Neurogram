@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "neurogram"
-version = "0.1.0"
+version = "0.2.0"
 description = "Memory infrastructure for AI agents. Give your AI a brain."
 readme = "README.md"
 license = {text = "MIT"}
@@ -36,6 +36,7 @@ dependencies = [
 [project.optional-dependencies]
 embeddings = ["sentence-transformers>=2.2.0"]
 openai = ["openai>=1.0.0"]
+langchain = ["langchain>=0.1.0"]
 server = [
     "fastapi>=0.100.0",
     "uvicorn[standard]>=0.20.0",
@@ -47,7 +48,7 @@ dev = [
     "httpx>=0.24.0",
 ]
 all = [
-    "neurogram[embeddings,openai,server,dev]",
+    "neurogram[embeddings,openai,langchain,server,dev]",
 ]
 
 [project.urls]

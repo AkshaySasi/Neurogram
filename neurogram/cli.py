@@ -56,6 +56,32 @@ def main():
         "--db", type=str, default=None, help="Path to database file"
     )
 
+    # ── dashboard command ──────────────────────────────────────────
+    dashboard_parser = subparsers.add_parser(
+        "dashboard", help="Start the memory visualization dashboard"
+    )
+    dashboard_parser.add_argument(
+        "--host", type=str, default="0.0.0.0", help="Dashboard host"
+    )
+    dashboard_parser.add_argument(
+        "--port", type=int, default=8080, help="Dashboard port"
+    )
+    dashboard_parser.add_argument(
+        "--db", type=str, default=None, help="Path to database file"
+    )
+
+    # ── consolidate command ────────────────────────────────────────
+    consolidate_parser = subparsers.add_parser(
+        "consolidate", help="Run memory consolidation for an agent"
+    )
+    consolidate_parser.add_argument("agent", type=str, help="Agent name")
+    consolidate_parser.add_argument(
+        "--dry-run", action="store_true", help="Show what would happen"
+    )
+    consolidate_parser.add_argument(
+        "--db", type=str, default=None, help="Path to database file"
+    )
+
     args = parser.parse_args()
 
     if args.version:
@@ -71,6 +97,10 @@ def main():
         _cmd_stats(args.agent, args.db)
     elif args.command == "server":
         _cmd_server(args.host, args.port, args.db)
+    elif args.command == "dashboard":
+        _cmd_dashboard(args.host, args.port, args.db)
+    elif args.command == "consolidate":
+        _cmd_consolidate(args.agent, args.dry_run, args.db)
     else:
         parser.print_help()
 
@@ -161,6 +191,38 @@ def _cmd_server(host, port, db_path):
         port=port,
         reload=False,
     )
+
+
+def _cmd_dashboard(host, port, db_path):
+    """Start the memory visualization dashboard."""
+    try:
+        from neurogram.dashboard.server import start_dashboard
+    except ImportError:
+        print("  Error: Dashboard requires FastAPI and uvicorn.")
+        print("  Install with: pip install neurogram[server]")
+        sys.exit(1)
+
+    start_dashboard(port=port, host=host, storage_path=db_path)
+
+
+def _cmd_consolidate(agent_name, dry_run, db_path):
+    """Run memory consolidation for an agent."""
+    from neurogram import Agent
+
+    agent = Agent(agent_name, storage_path=db_path)
+    print(f"\n  🧠 Consolidating memories for {agent_name}...")
+
+    if dry_run:
+        print("  (dry run — no changes will be made)\n")
+
+    result = agent.consolidate(dry_run=dry_run)
+
+    print(f"  Clusters found: {result['clusters_found']}")
+    print(f"  Memories merged: {result['memories_merged']}")
+    print(f"  Memories created: {result['memories_created']}")
+    print(f"  Memories removed: {result['memories_removed']}")
+
+    agent.close()
 
 
 if __name__ == "__main__":

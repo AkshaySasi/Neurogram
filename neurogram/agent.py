@@ -405,6 +405,38 @@ class Agent:
         """
         return self._memory.decay()
 
+    def consolidate(self, dry_run: bool = False) -> Dict[str, Any]:
+        """Consolidate fragmented memories into stronger ones.
+
+        Simulates human memory consolidation during sleep.
+        Groups similar memories, merges them into stronger
+        consolidated memories, and removes weak originals.
+
+        This makes the agent more efficient over time — instead of
+        100 fragmented memories, it creates 10 strong, comprehensive ones.
+
+        Args:
+            dry_run: If True, show what would happen without changes.
+
+        Returns:
+            Dictionary with consolidation stats:
+            - clusters_found: Memory clusters identified
+            - memories_merged: Individual memories merged
+            - memories_created: Consolidated memories created
+            - memories_removed: Originals removed
+
+        Example:
+            ```python
+            # Run consolidation periodically (like "sleep")
+            stats = adam.consolidate()
+            print(f"Merged {stats['memories_merged']} → {stats['memories_created']}")
+            ```
+        """
+        return self._memory.consolidate(dry_run=dry_run)
+
+    # Alias for consolidate — more intuitive name
+    sleep = consolidate
+
     def stats(self) -> Dict[str, Any]:
         """Get memory statistics.
 

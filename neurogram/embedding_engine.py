@@ -10,9 +10,15 @@ from __future__ import annotations
 
 import math
 import hashlib
+import os
 import re
+import warnings
 from abc import ABC, abstractmethod
+from pathlib import Path
 from typing import Dict, List, Optional, Tuple
+
+# Global flag to track if embedding hint has been shown this session
+_EMBEDDING_HINT_SHOWN = False
 
 
 class EmbeddingEngine(ABC):
@@ -263,5 +269,22 @@ def get_default_engine() -> EmbeddingEngine:
         return LocalEmbeddingEngine()
     except ImportError:
         pass
+
+    global _EMBEDDING_HINT_SHOWN
+    if not _EMBEDDING_HINT_SHOWN:
+        _EMBEDDING_HINT_SHOWN = True
+        # Check if user has opted out of hints
+        hint_flag = Path.home() / ".neurogram" / ".no_hints"
+        if not hint_flag.exists():
+            print(
+                "\033[36m💡 Neurogram tip:\033[0m Using lightweight embeddings (hash-based). "
+                "For \033[1m10x better\033[0m semantic search quality, install neural embeddings:\n"
+                "    \033[33mpip install neurogram[embeddings]\033[0m\n"
+                "  (Set NEUROGRAM_NO_HINTS=1 to suppress this message)\n"
+            )
+            # Also check env var
+            if os.environ.get("NEUROGRAM_NO_HINTS"):
+                hint_flag.parent.mkdir(parents=True, exist_ok=True)
+                hint_flag.touch()
 
     return NumpyEmbeddingEngine()

@@ -1,0 +1,16 @@
+# Neurogram Server Configuration
+# Deploy to Render.com (free tier)
+
+services:
+  - type: web
+    name: neurogram-api
+    runtime: python
+    plan: free
+    buildCommand: pip install ".[server]"
+    startCommand: uvicorn server.app:app --host 0.0.0.0 --port $PORT
+    healthCheckPath: /health
+    envVars:
+      - key: PYTHON_VERSION
+        value: "3.11"
+      - key: NEUROGRAM_NO_HINTS
+        value: "1"

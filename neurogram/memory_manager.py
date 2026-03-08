@@ -18,6 +18,7 @@ from neurogram.storage.sqlite_backend import SQLiteBackend
 from neurogram.episodic_memory import EpisodicMemory
 from neurogram.semantic_memory import SemanticMemory
 from neurogram.procedural_memory import ProceduralMemory
+from neurogram.consolidation_engine import ConsolidationEngine
 
 
 class MemoryManager:
@@ -62,6 +63,7 @@ class MemoryManager:
         self.episodic = EpisodicMemory(self._storage, self._embedding)
         self.semantic = SemanticMemory(self._storage, self._embedding)
         self.procedural = ProceduralMemory(self._storage, self._embedding)
+        self._consolidation = ConsolidationEngine(self._storage, self._embedding)
 
     def store(
         self,
@@ -280,6 +282,30 @@ class MemoryManager:
             "embedding_dimensions": self._embedding.dimensions,
             "storage_backend": type(self._storage).__name__,
         }
+
+    def consolidate(
+        self,
+        memory_type: Optional[MemoryType] = None,
+        dry_run: bool = False,
+    ) -> Dict[str, Any]:
+        """Consolidate fragmented memories into stronger ones.
+
+        Simulates human memory consolidation during sleep.
+        Groups similar memories and merges them, creating
+        fewer but stronger consolidated memories.
+
+        Args:
+            memory_type: Optional filter by memory type.
+            dry_run: If True, report what would happen without changes.
+
+        Returns:
+            Dictionary with consolidation stats.
+        """
+        return self._consolidation.consolidate(
+            agent_id=self.agent_id,
+            memory_type=memory_type,
+            dry_run=dry_run,
+        )
 
     def close(self) -> None:
         """Close the memory manager and release resources."""
