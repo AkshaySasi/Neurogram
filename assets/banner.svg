@@ -1,0 +1,193 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 320">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0a0a1a"/>
+      <stop offset="50%" stop-color="#0d0d24"/>
+      <stop offset="100%" stop-color="#0a0a1a"/>
+    </linearGradient>
+    <radialGradient id="glow1" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#7C3AED" stop-opacity="0.3"/>
+      <stop offset="100%" stop-color="#7C3AED" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="glow2" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#06B6D4" stop-opacity="0.3"/>
+      <stop offset="100%" stop-color="#06B6D4" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="blur">
+      <feGaussianBlur stdDeviation="2"/>
+    </filter>
+    <filter id="nodeGlow">
+      <feGaussianBlur stdDeviation="3" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;700&amp;display=swap');
+
+    .title {
+      font-family: 'Inter', -apple-system, sans-serif;
+      font-weight: 700;
+      font-size: 52px;
+      fill: #ffffff;
+      letter-spacing: 12px;
+    }
+    .subtitle {
+      font-family: 'Inter', -apple-system, sans-serif;
+      font-weight: 300;
+      font-size: 16px;
+      fill: #8888aa;
+      letter-spacing: 2px;
+    }
+
+    /* Node pulse animation */
+    .node-purple {
+      fill: #7C3AED;
+      animation: pulse-purple 3s ease-in-out infinite;
+    }
+    .node-cyan {
+      fill: #06B6D4;
+      animation: pulse-cyan 3s ease-in-out infinite;
+    }
+    .node-white {
+      fill: #ffffff;
+      opacity: 0.6;
+      animation: pulse-white 4s ease-in-out infinite;
+    }
+
+    /* Connection line animations */
+    .line-purple {
+      stroke: #7C3AED;
+      stroke-width: 0.8;
+      opacity: 0;
+      animation: line-fade 4s ease-in-out infinite;
+    }
+    .line-cyan {
+      stroke: #06B6D4;
+      stroke-width: 0.8;
+      opacity: 0;
+      animation: line-fade 4s ease-in-out infinite;
+    }
+    .line-dim {
+      stroke: #3a3a6a;
+      stroke-width: 0.5;
+      opacity: 0;
+      animation: line-fade 5s ease-in-out infinite;
+    }
+
+    /* Floating particles */
+    .particle {
+      opacity: 0;
+      animation: float 6s ease-in-out infinite;
+    }
+
+    @keyframes pulse-purple {
+      0%, 100% { opacity: 0.4; r: 3; }
+      50% { opacity: 1; r: 4.5; }
+    }
+    @keyframes pulse-cyan {
+      0%, 100% { opacity: 0.4; r: 2.5; }
+      50% { opacity: 1; r: 4; }
+    }
+    @keyframes pulse-white {
+      0%, 100% { opacity: 0.2; r: 1.5; }
+      50% { opacity: 0.7; r: 2.5; }
+    }
+    @keyframes line-fade {
+      0%, 100% { opacity: 0; }
+      30%, 70% { opacity: 0.4; }
+    }
+    @keyframes float {
+      0% { opacity: 0; transform: translateY(0); }
+      25% { opacity: 0.6; }
+      75% { opacity: 0.3; }
+      100% { opacity: 0; transform: translateY(-30px); }
+    }
+    @keyframes drift {
+      0%, 100% { transform: translateX(0) translateY(0); }
+      50% { transform: translateX(5px) translateY(-3px); }
+    }
+
+    .node-group-left { animation: drift 8s ease-in-out infinite; }
+    .node-group-right { animation: drift 8s ease-in-out infinite reverse; }
+  </style>
+
+  <!-- Background -->
+  <rect width="1280" height="320" fill="url(#bg)"/>
+
+  <!-- Ambient glow spots -->
+  <ellipse cx="180" cy="160" rx="200" ry="150" fill="url(#glow1)" opacity="0.15"/>
+  <ellipse cx="1100" cy="160" rx="200" ry="150" fill="url(#glow2)" opacity="0.12"/>
+
+  <!-- LEFT neural network cluster -->
+  <g class="node-group-left">
+    <!-- Connections -->
+    <line x1="80" y1="100" x2="140" y2="140" class="line-purple" style="animation-delay: 0s"/>
+    <line x1="140" y1="140" x2="100" y2="200" class="line-purple" style="animation-delay: 0.5s"/>
+    <line x1="80" y1="100" x2="100" y2="200" class="line-dim" style="animation-delay: 1s"/>
+    <line x1="140" y1="140" x2="200" y2="110" class="line-purple" style="animation-delay: 0.3s"/>
+    <line x1="200" y1="110" x2="220" y2="180" class="line-dim" style="animation-delay: 0.8s"/>
+    <line x1="140" y1="140" x2="220" y2="180" class="line-purple" style="animation-delay: 1.2s"/>
+    <line x1="60" y1="170" x2="80" y2="100" class="line-dim" style="animation-delay: 1.5s"/>
+    <line x1="60" y1="170" x2="100" y2="200" class="line-purple" style="animation-delay: 0.7s"/>
+    <line x1="220" y1="180" x2="260" y2="140" class="line-dim" style="animation-delay: 2s"/>
+    <line x1="200" y1="110" x2="260" y2="140" class="line-purple" style="animation-delay: 1.8s"/>
+
+    <!-- Nodes -->
+    <circle cx="80" cy="100" r="4" class="node-purple" style="animation-delay: 0s" filter="url(#nodeGlow)"/>
+    <circle cx="140" cy="140" r="5" class="node-purple" style="animation-delay: 0.5s" filter="url(#nodeGlow)"/>
+    <circle cx="100" cy="200" r="3" class="node-purple" style="animation-delay: 1s" filter="url(#nodeGlow)"/>
+    <circle cx="200" cy="110" r="3.5" class="node-purple" style="animation-delay: 0.3s" filter="url(#nodeGlow)"/>
+    <circle cx="220" cy="180" r="3" class="node-purple" style="animation-delay: 0.8s" filter="url(#nodeGlow)"/>
+    <circle cx="60" cy="170" r="2" class="node-white" style="animation-delay: 1.5s"/>
+    <circle cx="260" cy="140" r="2" class="node-white" style="animation-delay: 2s"/>
+  </g>
+
+  <!-- RIGHT neural network cluster -->
+  <g class="node-group-right">
+    <!-- Connections -->
+    <line x1="1060" y1="120" x2="1120" y2="160" class="line-cyan" style="animation-delay: 0.5s"/>
+    <line x1="1120" y1="160" x2="1080" y2="220" class="line-cyan" style="animation-delay: 1s"/>
+    <line x1="1060" y1="120" x2="1080" y2="220" class="line-dim" style="animation-delay: 1.5s"/>
+    <line x1="1120" y1="160" x2="1180" y2="130" class="line-cyan" style="animation-delay: 0.2s"/>
+    <line x1="1180" y1="130" x2="1200" y2="200" class="line-dim" style="animation-delay: 0.7s"/>
+    <line x1="1120" y1="160" x2="1200" y2="200" class="line-cyan" style="animation-delay: 1.3s"/>
+    <line x1="1030" y1="180" x2="1060" y2="120" class="line-dim" style="animation-delay: 1.8s"/>
+    <line x1="1030" y1="180" x2="1080" y2="220" class="line-cyan" style="animation-delay: 0.4s"/>
+    <line x1="1200" y1="200" x2="1230" y2="150" class="line-dim" style="animation-delay: 2.2s"/>
+
+    <!-- Nodes -->
+    <circle cx="1060" cy="120" r="4" class="node-cyan" style="animation-delay: 0.5s" filter="url(#nodeGlow)"/>
+    <circle cx="1120" cy="160" r="5" class="node-cyan" style="animation-delay: 1s" filter="url(#nodeGlow)"/>
+    <circle cx="1080" cy="220" r="3" class="node-cyan" style="animation-delay: 1.5s" filter="url(#nodeGlow)"/>
+    <circle cx="1180" cy="130" r="3.5" class="node-cyan" style="animation-delay: 0.2s" filter="url(#nodeGlow)"/>
+    <circle cx="1200" cy="200" r="3" class="node-cyan" style="animation-delay: 0.7s" filter="url(#nodeGlow)"/>
+    <circle cx="1030" cy="180" r="2" class="node-white" style="animation-delay: 1.8s"/>
+    <circle cx="1230" cy="150" r="2" class="node-white" style="animation-delay: 2.2s"/>
+  </g>
+
+  <!-- Floating particles -->
+  <circle cx="300" cy="80" r="1.2" fill="#7C3AED" class="particle" style="animation-delay: 0s"/>
+  <circle cx="350" cy="250" r="1" fill="#7C3AED" class="particle" style="animation-delay: 2s"/>
+  <circle cx="950" cy="90" r="1.2" fill="#06B6D4" class="particle" style="animation-delay: 1s"/>
+  <circle cx="980" cy="240" r="1" fill="#06B6D4" class="particle" style="animation-delay: 3s"/>
+  <circle cx="450" cy="60" r="0.8" fill="#ffffff" class="particle" style="animation-delay: 4s; opacity: 0.3"/>
+  <circle cx="830" cy="270" r="0.8" fill="#ffffff" class="particle" style="animation-delay: 5s; opacity: 0.3"/>
+
+  <!-- Subtle horizontal line accent -->
+  <line x1="380" y1="160" x2="480" y2="160" stroke="#2a2a5a" stroke-width="0.5" opacity="0.4"/>
+  <line x1="800" y1="160" x2="900" y2="160" stroke="#2a2a5a" stroke-width="0.5" opacity="0.4"/>
+
+  <!-- Center text -->
+  <text x="640" y="148" class="title" text-anchor="middle">NEUROGRAM</text>
+  <text x="640" y="185" class="subtitle" text-anchor="middle">Memory infrastructure for intelligent agents</text>
+
+  <!-- Thin bottom accent line -->
+  <rect x="540" y="210" width="200" height="1" rx="0.5" fill="url(#glow1)" opacity="0.3">
+    <animate attributeName="width" values="200;260;200" dur="4s" repeatCount="indefinite"/>
+    <animate attributeName="x" values="540;510;540" dur="4s" repeatCount="indefinite"/>
+  </rect>
+</svg>
