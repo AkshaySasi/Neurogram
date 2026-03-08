@@ -20,7 +20,29 @@
 
 Most memory tools for AI agents work the same way: dump everything into one bucket, search by similarity. That's basically a vector database with extra steps.
 
-But the human brain organizes memory very differently:
+### Why not just use chat history or a Vector DB?
+
+If you are building an AI app, sending the entire chat history in every API call is expensive and hits token limits. Using a standard vector database means the AI sees *every* mention of a topic, even outdated ones.
+
+**The Naive Approach (Vector DB)**
+*User: "What's my favorite language?"*
+Vector DB retrieves: 
+1. "User loves Javascript" (from 2022)
+2. "User is learning Python" (from 2023)
+3. "User prefers Python over JS" (from 2024)
+*Result: AI is confused, wastes tokens reading 3 conflicting memories.*
+
+**The Neurogram Approach (Cognitive Consolidation)**
+Neurogram's `agent.consolidate()` merges conflicting/redundant memories while the agent "sleeps", deleting the originals.
+Neurogram retrieves:
+1. "User switched from Javascript to Python in 2024 and strongly prefers Python."
+*Result: AI gets the exact, updated truth in fewer tokens.*
+
+---
+
+## How the human brain organizes memory
+
+The human brain organizes memory very differently than a flat database:
 
 - **Semantic memory** for facts ("Python is a programming language")
 - **Episodic memory** for experiences ("Last time I explained recursion, the user got confused")
